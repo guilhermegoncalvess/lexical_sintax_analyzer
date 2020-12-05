@@ -3,10 +3,10 @@
 
 int main() {
 
-    char var;
+    char vaa;
     var = 'a';
 
-    switch(var)
+    switch(vaa)
     {
         case 'a':
             printf("Hello World.");

@@ -38,6 +38,7 @@ def nextCharacterIs( token, nextCharacter  ):
     return TOKENS[token].find(nextCharacter)
 
 def state_q0( nextCharacter, file, recognizedTokens ):
+
     if( nextCharacter == '#'):
         recognizedTokens.append('HST')
 
@@ -48,9 +49,9 @@ def state_q0( nextCharacter, file, recognizedTokens ):
         recognizedTokens.append('MAIOR')
 
     elif( nextCharacter == '('):
-        nextCharacter = file.read(1)
+        # nextCharacter = file.read(1)
         recognizedTokens.append('AP')
-        state_q0(nextCharacter, file, recognizedTokens)
+        # state_q0(nextCharacter, file, recognizedTokens)
 
     elif( nextCharacter == ')'):
         recognizedTokens.append('FP')
@@ -101,11 +102,14 @@ def state_q0( nextCharacter, file, recognizedTokens ):
         nextCharacter = file.read(1)
         state_b2(nextCharacter, file, recognizedTokens)
 
-    elif( (nextCharacterIs( 'VARIAVEL', nextCharacter) != -1) and nextCharacter != 'b' and nextCharacter != 'c' and nextCharacter != 'i' and nextCharacter != 'm' and nextCharacter != 's' and nextCharacter != 'p' and nextCharacter != 'r' ):
-        nextCharacter = file.read(1)
+    elif( (nextCharacterIs( 'VARIAVEL', nextCharacter) != -1) and ( nextCharacter != 'b' or nextCharacter != 'c' or nextCharacter != 'i' or nextCharacter != 'm' or nextCharacter != 's' or nextCharacter != 'p' or nextCharacter != 'r' )):
+ 
         state_v1(nextCharacter, file, recognizedTokens)
         recognizedTokens.append("VARIAVEL")
-        # nextCharacter = file.read(1)    
+        if( nextCharacterIs( 'VARIAVEL', nextCharacter) == -1):
+            nextCharacter = file.read(1)    
+            print(nextCharacter)
+            state_q0(nextCharacter, file, recognizedTokens)
         # state_q0(nextCharacter, file, recognizedTokens)
     
 
@@ -115,14 +119,15 @@ def state_v0(nextCharacter, file, recognizedTokens):
         recognizedTokens.pop()
         recognizedTokens.append("VARIAVEL")
         # state_v0(nextCharacter, file, recognizedTokens)
-    
     state_q0(nextCharacter, file, recognizedTokens)
     
 def state_v1(nextCharacter, file, recognizedTokens):
+    nextCharacter = file.read(1)
     if( nextCharacterIs( 'VARIAVEL', nextCharacter) != -1):
         nextCharacter = file.read(1)
         state_v1(nextCharacter, file, recognizedTokens)
     
+
 
 def state_q2(nextCharacter, file, recognizedTokens ):
     if( nextCharacter == 'n'):
@@ -271,6 +276,8 @@ def state_r2(nextCharacter, file, recognizedTokens):
         state_r3(nextCharacter, file, recognizedTokens)
     elif( (nextCharacterIs('VARIAVEL', nextCharacter) != -1) and nextCharacter != 'e' ):
         state_v0( nextCharacter, file, recognizedTokens )
+    state_q0( nextCharacter, file, recognizedTokens )
+
 
 def state_r3(nextCharacter, file, recognizedTokens):
     if( nextCharacter == 't'):
@@ -361,11 +368,12 @@ def state_c7(nextCharacter, file, recognizedTokens):
 try:
     file = open('inputfile.txt', 'r')
 
+    nextCharacter = file.read(1)
     while True:
+
+        state_q0( nextCharacter, file, recognizedTokens)
         nextCharacter = file.read(1)
 
-        # print(nextCharacter,'.')
-        state_q0( nextCharacter, file, recognizedTokens)
         if(nextCharacter == ""):
             recognizedTokens.append('EOF')
             break
