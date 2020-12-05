@@ -1,0 +1,20 @@
+#include<>
+#include<>
+
+int main() {
+
+    char var;
+    var = 'a';
+
+    switch(var)
+    {
+        case 'a':
+            printf("Hello World.");
+            break;
+        case 'b':
+            printf("No Hello World");
+            break;
+    }
+    
+    return 0;
+}
