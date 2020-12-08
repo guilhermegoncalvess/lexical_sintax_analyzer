@@ -38,11 +38,12 @@ def nextCharacterIs( token, nextCharacter  ):
     return TOKENS[token].find(nextCharacter)
 
 def state_q0( nextCharacter, file, recognizedTokens ):
-
+    print("q0")
     if( nextCharacter == '#'):
         recognizedTokens.append('HST')
 
     elif( nextCharacter == '<'):
+        print("menor")
         recognizedTokens.append('MENOR')
 
     elif( nextCharacter == '>'):
@@ -103,14 +104,8 @@ def state_q0( nextCharacter, file, recognizedTokens ):
         state_b2(nextCharacter, file, recognizedTokens)
 
     elif( (nextCharacterIs( 'VARIAVEL', nextCharacter) != -1) and ( nextCharacter != 'b' or nextCharacter != 'c' or nextCharacter != 'i' or nextCharacter != 'm' or nextCharacter != 's' or nextCharacter != 'p' or nextCharacter != 'r' )):
- 
         state_v1(nextCharacter, file, recognizedTokens)
-        recognizedTokens.append("VARIAVEL")
-        if( nextCharacterIs( 'VARIAVEL', nextCharacter) == -1):
-            nextCharacter = file.read(1)    
-            print(nextCharacter)
-            state_q0(nextCharacter, file, recognizedTokens)
-        # state_q0(nextCharacter, file, recognizedTokens)
+        
     
 
 def state_v0(nextCharacter, file, recognizedTokens):
@@ -118,15 +113,18 @@ def state_v0(nextCharacter, file, recognizedTokens):
     if( nextCharacterIs( 'VARIAVEL', nextCharacter) != -1 ):
         recognizedTokens.pop()
         recognizedTokens.append("VARIAVEL")
-        # state_v0(nextCharacter, file, recognizedTokens)
-    state_q0(nextCharacter, file, recognizedTokens)
+        state_v0(nextCharacter, file, recognizedTokens)
+    else:
+        state_q0(nextCharacter, file, recognizedTokens)
     
 def state_v1(nextCharacter, file, recognizedTokens):
     nextCharacter = file.read(1)
     if( nextCharacterIs( 'VARIAVEL', nextCharacter) != -1):
         nextCharacter = file.read(1)
+        recognizedTokens.append("STRING")
         state_v1(nextCharacter, file, recognizedTokens)
-    
+    # else:
+    #     state_q0(nextCharacter, file, recognizedTokens)
 
 
 def state_q2(nextCharacter, file, recognizedTokens ):
@@ -364,7 +362,6 @@ def state_c7(nextCharacter, file, recognizedTokens):
         state_v0( nextCharacter, file, recognizedTokens )
 
 
-
 try:
     file = open('inputfile.txt', 'r')
 
@@ -383,3 +380,4 @@ except:
     print("Error opening file")
 
 print(recognizedTokens)
+
