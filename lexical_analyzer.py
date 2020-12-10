@@ -1,49 +1,36 @@
-TOKENS = {
-    'HST': '#',
-    'MENOR': '<',
-    'MAIOR': '>',
-    'ATRIB': "=",
+import TOKENS
 
-    'AP': '(',
-    'FP': '(',
-    'ACH': '{',
-    'FCH': '}',
-    'ASP': '"',
-    'PNTVIRG': ';',
-    'DPT': ':',
-    'ESPACO': ' ',
-    'SEPARADOR': "\n\r\t",
+recognizedTokens = [] 
 
-    'VARIAVEL': "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdeghijklnopqrstuvwxyz_",
-    'DIGITO': "0123456789",
 
-    'INCLUDE': "include",
-    'MAIN': "main",
+def scanner():   
+    try:
+        file = open('inputfile.txt', 'r')
 
-    'INT': "int",
-    'FLOAT': "float",
-    'CHAR': "char",
+        nextCharacter = file.read(1)
+        while True:
 
-    'SWITCH': "switch",
-    'CASE': "case",
-    'BREAK': "break",
-    'RETURN': "return",
-    'PRINTF': "printf"
-}
+            state_q0( nextCharacter, file, recognizedTokens)
+            nextCharacter = file.read(1)
 
-recognizedTokens = []
+            if(nextCharacter == ""):
+                recognizedTokens.append('EOF')
+                break
+            
+        file.close()
+    except:
+        print("Error opening file")
 
 
 def nextCharacterIs( token, nextCharacter  ):
-    return TOKENS[token].find(nextCharacter)
+    return TOKENS.TOKENS[token].find(nextCharacter)
 
 def state_q0( nextCharacter, file, recognizedTokens ):
-    print("q0")
+    # print("q0")
     if( nextCharacter == '#'):
         recognizedTokens.append('HST')
 
     elif( nextCharacter == '<'):
-        print("menor")
         recognizedTokens.append('MENOR')
 
     elif( nextCharacter == '>'):
@@ -123,8 +110,7 @@ def state_v1(nextCharacter, file, recognizedTokens):
         nextCharacter = file.read(1)
         recognizedTokens.append("STRING")
         state_v1(nextCharacter, file, recognizedTokens)
-    # else:
-    #     state_q0(nextCharacter, file, recognizedTokens)
+
 
 
 def state_q2(nextCharacter, file, recognizedTokens ):
@@ -362,22 +348,4 @@ def state_c7(nextCharacter, file, recognizedTokens):
         state_v0( nextCharacter, file, recognizedTokens )
 
 
-try:
-    file = open('inputfile.txt', 'r')
-
-    nextCharacter = file.read(1)
-    while True:
-
-        state_q0( nextCharacter, file, recognizedTokens)
-        nextCharacter = file.read(1)
-
-        if(nextCharacter == ""):
-            recognizedTokens.append('EOF')
-            break
-        
-    file.close()
-except:
-    print("Error opening file")
-
-print(recognizedTokens)
 
