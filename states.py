@@ -27,63 +27,76 @@ def state_q0(positionFile, file, recognizedToken ):
         recognizedToken = TOKENS.MAIOR
 
     
-    # elif( file[positionFile] == '('):
-    #     # positionFile = nextPosition(positionFile)
-    #     recognizedToken.append('AP')
-    #     # state_q0(file[positionFile], file, recognizedToken)
+    elif( file[positionFile] == '('):
+        positionFile = nextPosition(positionFile)
+        recognizedToken = TOKENS.AP
+        # state_q0(file[positionFile], file, recognizedToken)
 
-    # elif( file[positionFile] == ')'):
-    #     recognizedToken.append('FP')
+    elif( file[positionFile] == ')'):
+        positionFile = nextPosition(positionFile)
+        recognizedToken = TOKENS.FP
 
-    # elif( file[positionFile] == '{'):
-    #     recognizedToken.append('ACH')
+    elif( file[positionFile] == '{'):
+        positionFile = nextPosition(positionFile)
+        recognizedToken = TOKENS.ACH
     
-    # elif( file[positionFile] == '}'):
-    #     recognizedToken.append('FCH')
+    elif( file[positionFile] == '}'):
+        positionFile = nextPosition(positionFile)
+        recognizedToken = TOKENS.FCH
     
-    # elif( file[positionFile] == '"'):
-    #     recognizedToken.append('ASP')
+    elif( file[positionFile] == '"'):
+        positionFile = nextPosition(positionFile)
+        recognizedToken = TOKENS.ASP
 
-    # elif( file[positionFile] == ';'):
-    #     recognizedToken.append('PNTVIRG')
+    elif( file[positionFile] == "'"):
+        positionFile = nextPosition(positionFile)
+        recognizedToken = TOKENS.ASPS
 
-    # elif( file[positionFile] == ':'):
-    #     recognizedToken.append('DPT')
+    elif( file[positionFile] == ';'):
+        positionFile = nextPosition(positionFile)
+        recognizedToken = TOKENS.PNTVIRG
 
-    # elif( file[positionFile] == '='):
-    #     recognizedToken.append('ATRIB')
+    elif( file[positionFile] == ':'):
+        positionFile = nextPosition(positionFile)
+        recognizedToken = TOKENS.DPT
 
-    # elif( file[positionFile] == 'c'):
-    #     positionFile = nextPosition(positionFile)
-    #     state_c2(file[positionFile], file, recognizedToken)
+    elif( file[positionFile] == '='):
+        positionFile = nextPosition(positionFile)
+        recognizedToken = TOKENS.ATRIB
+
+    elif( file[positionFile] == 'c'):
+        positionFile = nextPosition(positionFile)
+        positionFile, recognizedToken = state_c2(positionFile, file, recognizedToken)
     
     elif( file[positionFile] == 'i'):
         positionFile = nextPosition(positionFile)
         positionFile, recognizedToken = state_q2(positionFile, file, recognizedToken)
         
-    # elif( file[positionFile] == 's'):
-    #    positionFile = nextPosition(positionFile)
-    #    state_s2(file[positionFile], file, recognizedToken)
+    elif( file[positionFile] == 's'):
+       positionFile = nextPosition(positionFile)
+       positionFile, recognizedToken = state_s2(positionFile, file, recognizedToken)
 
     elif( file[positionFile] == 'm'):
         positionFile = nextPosition(positionFile)
-        state_m2(positionFile, file, recognizedToken)
+        positionFile, recognizedToken = state_m2(positionFile, file, recognizedToken)
 
-    # elif( file[positionFile] == 'p'):
-    #     positionFile = nextPosition(positionFile)
-    #     state_p2(file[positionFile], file, recognizedToken)
+    elif( file[positionFile] == 'p'):
+        positionFile = nextPosition(positionFile)
+        positionFile, recognizedToken = state_p2(positionFile, file, recognizedToken)
 
     
-    # elif( file[positionFile] == 'r'):
-    #     positionFile = nextPosition(positionFile)
-    #     state_r2(file[positionFile], file, recognizedToken)
+    elif( file[positionFile] == 'r'):
+        positionFile = nextPosition(positionFile)
+        positionFile, recognizedToken = state_r2(positionFile, file, recognizedToken)
 
-    # elif( file[positionFile] == 'b'):
-    #     positionFile = nextPosition(positionFile)
-    #     state_b2(file[positionFile], file, recognizedToken)
+    elif( file[positionFile] == 'b'):
+        positionFile = nextPosition(positionFile)
+        positionFile, recognizedToken = state_b2(positionFile, file, recognizedToken)
 
-    # elif( (nextCharacterIs( 'VARIAVEL', file[positionFile]) != -1) and ( file[positionFile] != 'b' or file[positionFile] != 'c' or file[positionFile] != 'i' or file[positionFile] != 'm' or file[positionFile] != 's' or file[positionFile] != 'p' or file[positionFile] != 'r' )):
-    #     state_v1(file[positionFile], file, recognizedToken)
+    elif( (nextCharacterIs( TOKENS.VARIAVEL, file[positionFile]) != -1) and ( file[positionFile] != 'b' or file[positionFile] != 'c' or file[positionFile] != 'i' or file[positionFile] != 'm' or file[positionFile] != 's' or file[positionFile] != 'p' or file[positionFile] != 'r' )):
+        positionFile, recognizedToken = state_v1(positionFile, file, recognizedToken)
+        print(positionFile, recognizedToken, "DA STATE")
+
     # print(positionFile, recognizedToken)
     # print(positionFile)
     # positionFile = nextPosition(positionFile)
@@ -92,7 +105,7 @@ def state_q0(positionFile, file, recognizedToken ):
 
 def state_v0(positionFile, file, recognizedToken):
     positionFile = nextPosition(positionFile)
-    if( nextCharacterIs( 'VARIAVEL', file[positionFile]) != -1 ):
+    if( nextCharacterIs( TOKENS.VARIAVEL, file[positionFile]) != -1 ):
         recognizedToken = TOKENS.VARIAVEL
         state_v0(positionFile, file, recognizedToken)
 
@@ -101,11 +114,13 @@ def state_v0(positionFile, file, recognizedToken):
     #     state_q0(positionFile, file, recognizedToken)
     
 def state_v1(positionFile, file, recognizedToken):
-    positionFile = nextPosition(positionFile)
-    if( nextCharacterIs( 'VARIAVEL', file[positionFile]) != -1):
+    if( nextCharacterIs( TOKENS.VARIAVEL, file[positionFile]) != -1):
         positionFile = nextPosition(positionFile)
-        recognizedToken.append("VARIAVEL")
-        state_v1(positionFile, file, recognizedToken)
+        # positionFile = nextPosition(positionFile)
+        positionFile, recognizedToken = state_v1(positionFile, file, recognizedToken)
+        recognizedToken = TOKENS.VARIAVEL
+
+    return positionFile, recognizedToken
 
 
 
@@ -176,7 +191,7 @@ def state_s2(positionFile, file, recognizedToken):
         return positionFile, recognizedToken
         
     else:
-        if( nextCharacterIs( 'VARIAVEL', file[positionFile]) != -1 ):
+        if( nextCharacterIs( TOKENS.VARIAVEL, file[positionFile]) != -1 ):
             positionFile, recognizedToken = state_v0( positionFile, file, recognizedToken )  
             return positionFile, recognizedToken   
 
@@ -209,7 +224,7 @@ def state_s5(positionFile, file, recognizedToken):
 
 def state_s6(positionFile, file, recognizedToken):
     if( file[positionFile] == 'h'):
-        recognizedToken.append('SWITCH')  
+        recognizedToken = TOKENS.SWITCH
         positionFile, recognizedToken = state_v0(positionFile, file, recognizedToken)
         return positionFile, recognizedToken 
     elif( nextCharacterIs(('VARIAVEL', file[positionFile]) != -1) and file[positionFile] != 'h' ):
@@ -238,7 +253,7 @@ def state_m3(positionFile, file, recognizedToken):
 def state_m4(positionFile, file, recognizedToken):
     if( file[positionFile] == 'n'):
         recognizedToken = TOKENS.MAIN  
-        positionFile, recognizedToken = state_v0(positionFile, file, recognizedToken)     
+        positionFile, recognizedToken = state_v0(positionFile, file, recognizedToken)  
         return positionFile, recognizedToken 
     elif( (nextCharacterIs('VARIAVEL', file[positionFile]) != -1) and file[positionFile] != 'n' ):
         positionFile, recognizedToken = state_v0( positionFile, file, recognizedToken )  
@@ -283,7 +298,7 @@ def state_p5(positionFile, file, recognizedToken):
 
 def state_p6(positionFile, file, recognizedToken):
     if( file[positionFile] == 'f'):
-        recognizedToken.append('PRINTF')
+        recognizedToken = TOKENS.PRINTF 
         positionFile, recognizedToken = state_v0(positionFile, file, recognizedToken)
         return positionFile, recognizedToken 
     elif( (nextCharacterIs('VARIAVEL', file[positionFile]) != -1) and file[positionFile] != 'f' ):
@@ -331,7 +346,7 @@ def state_r5(positionFile, file, recognizedToken):
 
 def state_r6(positionFile, file, recognizedToken):
     if( file[positionFile] == 'n'):
-        recognizedToken.append('RETURN')
+        recognizedToken = TOKENS.RETURN
         positionFile, recognizedToken = state_v0( positionFile, file, recognizedToken )  
         return positionFile, recognizedToken
 
@@ -341,6 +356,10 @@ def state_b2(positionFile, file, recognizedToken):
     if( file[positionFile] == 'r'):
         positionFile = nextPosition(positionFile)
         positionFile, recognizedToken = state_b3(positionFile, file, recognizedToken)
+        return positionFile, recognizedToken
+    else:
+        # positionFile = nextPosition(positionFile)
+        recognizedToken = TOKENS.VARIAVEL
         return positionFile, recognizedToken
 
 def state_b3(positionFile, file, recognizedToken):
@@ -357,9 +376,10 @@ def state_b4(positionFile, file, recognizedToken):
 
 def state_b5(positionFile, file, recognizedToken):
     if( file[positionFile] == 'k'):
-        recognizedToken.append('BREAK')
+        recognizedToken = TOKENS.BREAK
         positionFile, recognizedToken = state_v0( positionFile, file, recognizedToken )  
         return positionFile, recognizedToken
+
 
 def state_c2(positionFile, file, recognizedToken):
     if( file[positionFile] == 'h'):
@@ -377,13 +397,18 @@ def state_c2(positionFile, file, recognizedToken):
 def state_c3(positionFile, file, recognizedToken):
     if( file[positionFile] == 'a'):
         positionFile = nextPosition(positionFile)
-        state_c4(positionFile, file, recognizedToken)
+        positionFile, recognizedToken = state_c4(positionFile, file, recognizedToken)
+        return positionFile, recognizedToken
+
+    elif( (nextCharacterIs('VARIAVEL', file[positionFile]) != -1) and file[positionFile] != 'r' ):
+        positionFile, recognizedToken = state_v0( positionFile, file, recognizedToken )
         return positionFile, recognizedToken
 
 def state_c4(positionFile, file, recognizedToken):
     if( file[positionFile] == 'r'):
-        recognizedToken.append('CHAR')
+        recognizedToken = TOKENS.CHAR
         positionFile, recognizedToken = state_v0(positionFile, file, recognizedToken)
+        return positionFile, recognizedToken
         
     elif( (nextCharacterIs('VARIAVEL', file[positionFile]) != -1) and file[positionFile] != 'r' ):
         positionFile, recognizedToken = state_v0( positionFile, file, recognizedToken )
@@ -400,6 +425,6 @@ def state_c6(positionFile, file, recognizedToken):
 
 def state_c7(positionFile, file, recognizedToken):
     if( file[positionFile] == 'e'):
-        recognizedToken.append('CASE')
+        recognizedToken = TOKENS.CASE
         positionFile, recognizedToken = state_v0( positionFile, file, recognizedToken )
         return positionFile, recognizedToken         
