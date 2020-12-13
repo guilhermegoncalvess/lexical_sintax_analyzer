@@ -14,6 +14,7 @@ TOKENS = {
     'ESPACO': ' ',
     'SEPARADOR': "\n\r\t",
 
+    'STRING': "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdeghijklnopqrstuvwxyz_",
     'VARIAVEL': "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdeghijklnopqrstuvwxyz_",
     'DIGITO': "0123456789",
 
@@ -30,3 +31,35 @@ TOKENS = {
     'RETURN': "return",
     'PRINTF': "printf"
 }
+
+HST = 'HST'
+MENOR = 'MENOR'
+MAIOR = 'MAIOR'
+ATRIB = 'ATRIB'
+
+AP = 'AP'
+FP = 'FP'
+ACH = 'ACH'
+FCH = 'FCH'
+ASP = 'ASP'
+PNTVIRG = 'PNTVIRG'
+DPT = 'DPT'  
+ESPACO = 'ESPACO'
+SEPARADOR = 'SEPARADOR'
+
+VARIAVEL = 'VARIAVEL'
+DIGITO = 'DIGITO'
+
+INCLUDE = 'INCLUDE'
+MAIN = 'MAIN'
+
+INT = 'INT'
+FLOAT = 'FLOAT'
+CHAR = 'CHAR'
+
+SWITCH = 'SWITCH'
+CASE = 'CASE'
+BREAK = 'BREAK'
+RETURN = 'RETURN'
+PRINTF = 'PRINTF'
+
