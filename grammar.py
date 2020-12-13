@@ -15,6 +15,7 @@ def ignoreSpace(positionFile):
 def nextToken(positionFile, file, recognizedToken):
         positionFile = ignoreSpace(positionFile)
         if positionFile == len(file):
+            print("Finished reading")
             exit()
         positionFile, recognizedToken = states.state_q0(positionFile, file, recognizedToken)
         return  positionFile, recognizedToken
@@ -22,12 +23,12 @@ def nextToken(positionFile, file, recognizedToken):
 def recognize( token, positionFile,  recognizedToken ):
     actualToken = token
     if token == recognizedToken:
-        print("TokenReconhecido", token)
+        print("Recognized token:", token)
         positionFile, recognizedToken = nextToken( positionFile, file, recognizedToken)
-        print( "nextToken","-->", recognizedToken)
+        print( "Token read:", recognizedToken)
         return positionFile, recognizedToken
     else:
-        print("TokenEsperado:", actualToken)
+        print("Expected token:", actualToken)
         # return positionFile, recognizedToken
 
 def init(positionFile, recognizedToken):

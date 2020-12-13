@@ -6,13 +6,13 @@ int main() {
     char vaa;
     var = 'a';
 
-    switch(vaa)
+    switch(vaa) 
     {
         case 'a':
-            printf("Hello World.");
+            printf("Hello World");
             break;
         case 'b':
-            printf("No Hello World");
+            printf("Hello World");
             break;
     }
     
