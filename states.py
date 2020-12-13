@@ -97,6 +97,10 @@ def state_q0(positionFile, file, recognizedToken ):
         positionFile, recognizedToken = state_v1(positionFile, file, recognizedToken)
         print(positionFile, recognizedToken, "DA STATE")
 
+    elif( (nextCharacterIs( TOKENS.NUMERO, file[positionFile]) != -1) ):
+        # positionFile = nextPosition(positionFile)
+        positionFile, recognizedToken = state_n0(positionFile, file, recognizedToken)
+        print(positionFile, recognizedToken, "DA STATE")
     # print(positionFile, recognizedToken)
     # print(positionFile)
     # positionFile = nextPosition(positionFile)
@@ -120,6 +124,15 @@ def state_v1(positionFile, file, recognizedToken):
         positionFile, recognizedToken = state_v1(positionFile, file, recognizedToken)
         recognizedToken = TOKENS.VARIAVEL
 
+    return positionFile, recognizedToken
+
+def state_n0(positionFile, file, recognizedToken):
+    if( nextCharacterIs( TOKENS.NUMERO, file[positionFile]) != -1):
+        positionFile = nextPosition(positionFile)
+        # positionFile = nextPosition(positionFile)
+        positionFile, recognizedToken = state_n0(positionFile, file, recognizedToken)
+        recognizedToken = TOKENS.NUMERO
+        print("NUMEROOOO")
     return positionFile, recognizedToken
 
 
