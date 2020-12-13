@@ -16,7 +16,7 @@ TOKENS = {
 
     'STRING': "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdeghijklnopqrstuvwxyz_",
     'VARIAVEL': "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdeghijklnopqrstuvwxyz_",
-    'DIGITO': "0123456789",
+    'NUMERO': "0123456789",
 
     'INCLUDE': "include",
     'MAIN': "main",
@@ -64,4 +64,5 @@ BREAK = 'BREAK'
 RETURN = 'RETURN'
 PRINTF = 'PRINTF'
 
-NUMERO = "NUM"
+NUMERO = "NUMERO"
+EOF = "EOF"
