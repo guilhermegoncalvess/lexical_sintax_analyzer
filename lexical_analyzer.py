@@ -3,23 +3,23 @@ import TOKENS
 recognizedTokens = [] 
 
 
-def scanner():   
-    try:
-        file = open('inputfile.txt', 'r')
+# def scanner():   
+#     try:
+#         file = open('inputfile.txt', 'r')
 
-        nextCharacter = file.read(1)
-        while True:
+#         nextCharacter = file.read(1)
+#         while True:
+#             state_q0( nextCharacter, file, recognizedTokens)
 
-            state_q0( nextCharacter, file, recognizedTokens)
-            nextCharacter = file.read(1)
-
-            if(nextCharacter == ""):
-                recognizedTokens.append('EOF')
-                break
+#             nextCharacter = file.read(1)
+#             print(nextCharacter, "main")
+#             if(nextCharacter == ""):
+#                 recognizedTokens.append('EOF')
+#                 break
             
-        file.close()
-    except:
-        print("Error opening file")
+#         file.close()
+#     except:
+#         print("Error opening file")
 
 
 def nextCharacterIs( token, nextCharacter  ):
@@ -96,6 +96,7 @@ def state_q0( nextCharacter, file, recognizedTokens ):
     
 
 def state_v0(nextCharacter, file, recognizedTokens):
+    print(nextCharacter,"varia")
     nextCharacter = file.read(1)
     if( nextCharacterIs( 'VARIAVEL', nextCharacter) != -1 ):
         recognizedTokens.pop()
@@ -108,7 +109,7 @@ def state_v1(nextCharacter, file, recognizedTokens):
     nextCharacter = file.read(1)
     if( nextCharacterIs( 'VARIAVEL', nextCharacter) != -1):
         nextCharacter = file.read(1)
-        recognizedTokens.append("STRING")
+        recognizedTokens.append("VARIAVEL")
         state_v1(nextCharacter, file, recognizedTokens)
 
 
@@ -164,8 +165,10 @@ def state_s2(nextCharacter, file, recognizedTokens):
     if( nextCharacter == 'w'):
         nextCharacter = file.read(1)
         state_s3(nextCharacter, file, recognizedTokens)
-    elif( nextCharacterIs(('VARIAVEL', nextCharacter) != -1) and nextCharacter != 'w' ):
-        state_v0( nextCharacter, file, recognizedTokens )    
+        
+    else:
+        if( nextCharacterIs( 'VARIAVEL', nextCharacter) != -1 ):
+            state_v0( nextCharacter, file, recognizedTokens )    
 
 def state_s3(nextCharacter, file, recognizedTokens):
     if( nextCharacter == 'i'):
@@ -347,5 +350,5 @@ def state_c7(nextCharacter, file, recognizedTokens):
         recognizedTokens.append('CASE')
         state_v0( nextCharacter, file, recognizedTokens )
 
-
-
+scanner()
+print(recognizedTokens)
